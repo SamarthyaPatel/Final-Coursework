@@ -3,11 +3,25 @@
 @section('title', 'Post Index')
 
 @section('content')
-    <P>The posts on the social platform</P>
+    <h1>The posts on the social platform</h1>
+
+    @if (session('message'))
+        <p style="background-color: chartreuse"> {{ session('message') }} </p>
+    @endif
+
     <ul>
         @foreach($posts as $post)
-            <li>{{ $post->caption }}</li>
+
+        <h4><a href=" {{ route('show', ['id' => $post->id]) }} ">{{$post->caption}}</a></h4>
+
         @endforeach
     </ul>
+
+    {{-- Button for creating new post. --}}
+    <form action=" {{ route('create')}} " method="GET">
+        <button type="submit"> New Post </button>
+    </form>
+
+    {{-- <a href=" {{ route('create')}} "> New Post </a> --}}
 
 @endsection

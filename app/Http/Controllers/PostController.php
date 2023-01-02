@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -36,7 +36,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'caption'=>'required',
+        ]); 
+        // Getting values from the blade template form
+        $post = new Post;
+        $post->caption = $request->input('caption');
+        $post->save();
+
+        session()->flash('message', 'New Post Uploaded.');
+
+        return redirect('/posts');
     }
 
     /**

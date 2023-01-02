@@ -9,4 +9,8 @@
         <li> Caption: {{$post->caption}} </li>
     </ul>
 
+    <form action="{{ route('index') }}" method="GET">
+        <button type="submit"> Delete </button>
+    </form>
+
 @endsection
