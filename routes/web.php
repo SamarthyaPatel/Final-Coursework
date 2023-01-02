@@ -40,4 +40,6 @@ Route::post('/posts', [PostController::class, 'store'])->name('store');
 
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('show');
 
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('destroy');
+
 require __DIR__.'/auth.php';
