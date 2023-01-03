@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [PostController::class, 'index'])->name('index');
 
     Route::get('/create', [PostController::class, 'create'])->name('create');
 
     Route::post('/', [PostController::class, 'store'])->name('store');
+    
+    Route::post('/', [CommentController::class, 'store'])->name('store_comment');
 
     Route::get('/{id}', [PostController::class, 'show'])->name('show');
 
