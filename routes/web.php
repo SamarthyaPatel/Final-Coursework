@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
+    Route::get('/', [PostController::class, 'index'])->name('index');
 
     Route::get('/create', [PostController::class, 'create'])->name('create');
 
@@ -38,8 +39,6 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/{id}', [PostController::class, 'show'])->name('show');
 
-
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('show');
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
 });
 

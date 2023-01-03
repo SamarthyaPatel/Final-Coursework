@@ -18,6 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::get();
+        $posts = $posts->reverse();
         $users = User::get();
         return view('posts.index', ['posts' => $posts, 'users' => $users]);
     }
@@ -63,7 +64,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', ['post' => $post]);
+        $user = User::findOrFail($post->user_id);
+        $post_time = $post->created_at;
+        return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time]);
     }
 
     /**
@@ -110,4 +113,5 @@ class PostController extends Controller
 
         return redirect()->route('index')->with('message', 'Post was deleted successfully.');
     }
+
 }
