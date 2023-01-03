@@ -9,11 +9,13 @@
         <li> Caption: {{$post->caption}} </li>
     </ul>
 
-    <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Delete</button>
-    </form>
+    @if ($post->user_id == Auth::user()->id)
+        <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete</button>
+        </form>
+    @endif
 
     <a href=" {{route('index')}} ">Back</a>
 

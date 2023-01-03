@@ -30,16 +30,17 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
+    Route::get('/create', [PostController::class, 'create'])->name('create');
 
-Route::get('/posts', [PostController::class, 'index'])->name('index');
+    Route::post('/', [PostController::class, 'store'])->name('store');
 
-Route::get('/posts/create', [PostController::class, 'create'])->name('create');
+    Route::get('/{id}', [PostController::class, 'show'])->name('show');
 
-Route::post('/posts', [PostController::class, 'store'])->name('store');
 
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('show');
-
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('destroy');
+    Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
+});
 
 require __DIR__.'/auth.php';

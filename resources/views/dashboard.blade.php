@@ -11,6 +11,12 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                 </div>
+
+                <div>
+                    <form action=" {{ route('index')}} " method="GET">
+                        <button type="submit"> Posts </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Auth;
 use App\Models\Post;
+use App\Models\User;
+
 
 use Illuminate\Http\Request;
 
@@ -42,6 +45,7 @@ class PostController extends Controller
         // Getting values from the blade template form
         $post = new Post;
         $post->caption = $request->input('caption');
+        $post->user_id = Auth::user()->id;
         $post->save();
 
         session()->flash('message', 'New Post Uploaded.');
@@ -93,7 +97,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-        $post->delete();
+
+        $current_user = Auth::user()->id;
+        $post_user = $post->user_id;
+
+        if($post_user == $current_user) {
+            $post->delete();
+        } else {
+            return redirect()->route('index')->with('message', 'You can not delete ' . User::findOrFail($post_user)->name . '\'s post. ');
+        }
 
         return redirect()->route('index')->with('message', 'Post was deleted successfully.');
     }
