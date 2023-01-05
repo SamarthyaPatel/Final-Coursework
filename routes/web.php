@@ -36,8 +36,8 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/create', [PostController::class, 'create'])->name('create');
 
     Route::post('/', [PostController::class, 'store'])->name('store');
-    
-    Route::post('/', [CommentController::class, 'store'])->name('store_comment');
+
+    Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
 
     Route::get('/{id}', [PostController::class, 'show'])->name('show');
 

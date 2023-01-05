@@ -5,8 +5,6 @@ use Auth;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
-
-
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -67,6 +65,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $user = User::findOrFail($post->user_id);
         $post_time = $post->created_at;
+        session_start();
+        $_SESSION['comments'] = Comment::get();
         $comments = Comment::get();
         $comments = $comments->reverse();
         return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time, 'comments' => $comments]);

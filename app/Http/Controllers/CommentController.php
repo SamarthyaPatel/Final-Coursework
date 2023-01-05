@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Auth;
 
 use Illuminate\Http\Request;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 
 class CommentController extends Controller
 {
@@ -34,9 +38,16 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'comment'=>'required',
+        ]); 
+        $comment = new Comment();
+        $comment->comment = $request->input('comment');
+        $comment->user_id = Auth::user()->id;
+        $comment->save();
 
-        return redirect('posts/show', 6);
+        session()->flash('message', 'New Comment Uploaded.');
+
     }
 
     /**
@@ -45,9 +56,14 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function listComments($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $user = User::findOrFail($post->user_id);
+        $comments = Comment::get();
+        $comments = $comments->reverse();
+
+        return view('posts.commentListing', ['user' => $user, 'comments' => $comments]);
     }
 
     /**
