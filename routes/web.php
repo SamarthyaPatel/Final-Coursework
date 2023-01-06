@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\testingEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +46,11 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
 
     Route::get('/{id}', [ListController::class, 'list'])->name('list');
+
+    
 });
 
 
-
+Route::get('/email/sending', [testingEmailController::class, 'store']);
 
 require __DIR__.'/auth.php';
