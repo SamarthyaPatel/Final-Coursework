@@ -48,7 +48,7 @@ use Auth;
             <h1>Comments</h1>
 
             <div class="col-md-5">
-                <input type="text" class="comment form-control" placeholder="Comment" style="min-width: 70%; font-size: 1.2em;">
+                <input type="text" id="comment" class="comment form-control" placeholder="Comment" style="min-width: 70%; font-size: 1.2em;">
 
                 <a href="javascript:void(0)" class="btn btn-primary submit" style="font-size: 2.5em; text-decoration: none; color: white; font-weight: bolder; text-align: right;"> <br> + </a>
             </div>
@@ -97,6 +97,10 @@ use Auth;
                 comment: comment
             },
             success: function (data) {
+                var getValue= document.getElementById("comment");
+                if (getValue.value !="") {
+                    getValue.value = "";
+                }
                 listComment();
                 $.ajax({
                     type: 'get',
