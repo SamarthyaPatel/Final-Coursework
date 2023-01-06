@@ -23,64 +23,40 @@ use Auth;
 <body>
     <h1>Social Platform - {{$user->name}} </h1>
 
-    <div>
-        <div style="background-color:lightblue; width:50%; margin: auto; padding: 1em; border-radius: 20px;">
+    <div style="background-color:lightblue; width:50%; margin: auto; padding: 1em; border-radius: 20px;">
 
-            <div>
-                <a href=" {{route('index')}} " style="font-size: 4em; padding-left: 0.5em; text-decoration: none; font-family:'Courier New', Courier, monospace; color: white;">🠔</a>
-                @if ($user->id == Auth::user()->id)
-                    <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="background-color: transparent; border: 0; padding-left: 90%;">
-                            <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg" style="color: white;"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4v-24h-24v24zm26-30h-7l-2-2h-10l-2 2h-7v4h28v-4z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
-                        </button>
-                    </form>
-                @endif
-                
-                <p style="font-weight: bold; font-size: 3em; "> {{$post->caption}} </p>
-                
-                @inject('time', 'App\Http\Controllers\TimeElapsed')
-                <p style="text-align: right; font-size: 1.5em; padding-right: 5%;">
-                    {{ $time::time_elapsed_string($post_time) }}
-                </p>
+        <div>
+            <a href=" {{route('index')}} " style="font-size: 4em; padding-left: 0.5em; text-decoration: none; font-family:'Courier New', Courier, monospace; color: white;">🠔</a>
+            @if ($user->id == Auth::user()->id)
+                <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" style="background-color: transparent; border: 0; padding-left: 90%;">
+                        <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg" style="color: white;"><path d="M12 38c0 2.21 1.79 4 4 4h16c2.21 0 4-1.79 4-4v-24h-24v24zm26-30h-7l-2-2h-10l-2 2h-7v4h28v-4z"/><path d="M0 0h48v48h-48z" fill="none"/></svg>
+                    </button>
+                </form>
+            @endif
+            
+            <p style="font-weight: bold; font-size: 3em; "> {{$post->caption}} </p>
+            
+            @inject('time', 'App\Http\Controllers\TimeElapsed')
+            <p style="text-align: right; font-size: 1.5em; padding-right: 5%;">
+                {{ $time::time_elapsed_string($post_time) }}
+            </p>
+        </div>
+
+        <div class="container">
+            <h1>Comments</h1>
+
+            <div class="col-md-5">
+                <input type="text" class="comment form-control" placeholder="Comment" style="min-width: 70%; font-size: 1.2em;">
+
+                <a href="javascript:void(0)" class="btn btn-primary submit" style="font-size: 2.5em; text-decoration: none; color: white; font-weight: bolder; text-align: right;"> <br> + </a>
             </div>
-    
-            <div class="container">
-                <p>Comments</p>
-    
-                <div class="col-md-5">
-                    <input type="text" class="comment form-control" placeholder="Comment">
+            <br>
+            <br><br>
+            <div class="listComments"></div>
 
-                    <a href="javascript:void(0)" class="btn btn-primary submit">SUBMIT</a>
-                </div>
-    
-                {{-- <div class="comment_list"> 
-                    <ul>
-                        @foreach($comments as $comment)
-                
-                        <div>
-                            
-                            <h1> {{ $comment->comment }} </h1>
-                            
-                            @inject('time', 'App\Http\Controllers\TimeElapsed')
-                            <p style="text-align: right; font-size: 1.5em; padding-right: 5%;">
-                                {{ $time::time_elapsed_string($comment->created_at) }}
-                            </p>
-                            </div>
-                        <div style="height: 1cm;">
-                        </div>
-                
-                        @endforeach
-                    </ul>   
-                </div> --}}
-                
-                <div class="trigger">
-                    <h1 id="comment-content"></h1>
-                    <p id="posted-time" style="text-align: right; font-size: 1.5em; padding-right: 5%;"></p>
-                </div>
-
-            </div>
         </div>
     </div>
 
@@ -97,9 +73,9 @@ use Auth;
 
     function listComment(){
         $.ajax({
-                url:'{{route("list", ["id" => 10])}}',
+                url:'{{route("list", ["id" => Auth::user()->id])}}',
                 success:function(res){
-                    $('.trigger').html(res);
+                    $('.listComments').html(res);
                 }
             });
     }
@@ -117,7 +93,7 @@ use Auth;
         var comment = $(".comment").val();
         $.ajax({
             type: 'POST',
-            url: "{{ route('comment', ['id' => 10]) }}",
+            url: "{{ route('comment', ['id' => Auth::user()->id]) }}",
             data: {
                 comment: comment
             },

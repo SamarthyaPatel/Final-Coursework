@@ -31,20 +31,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('platform')->middleware(['auth', 'verified'])->group(function() {
+Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [PostController::class, 'index'])->name('index');
 
-    Route::get('/posts/create', [PostController::class, 'create'])->name('create');
+    Route::get('/create', [PostController::class, 'create'])->name('create');
 
     Route::post('/', [PostController::class, 'store'])->name('store');
 
-    Route::post('/posts/{id}', [CommentController::class, 'store'])->name('comment');
+    Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
 
-    Route::get('/posts/show/{id}', [PostController::class, 'show'])->name('show');
+    Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
 
-    Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('destroy');
+    Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
 
-    Route::get('/posts/{id}', [ListController::class, 'list'])->name('list');
+    Route::get('/{id}', [ListController::class, 'list'])->name('list');
 });
 
 
