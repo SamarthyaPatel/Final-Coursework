@@ -40,7 +40,7 @@ class CommentController extends Controller
     {
         $request->validate([
             'comment'=>'required',
-        ]); 
+        ]);
         $comment = new Comment();
         $comment->comment = $request->input('comment');
         $comment->user_id = Auth::user()->id;
@@ -56,14 +56,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function listComments($id)
+    public function show($id)
     {
-        $post = Post::findOrFail($id);
-        $user = User::findOrFail($post->user_id);
-        $comments = Comment::get();
-        $comments = $comments->reverse();
-
-        return view('posts.commentListing', ['user' => $user, 'comments' => $comments]);
+        //
     }
 
     /**

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,18 +31,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
+Route::prefix('platform')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/', [PostController::class, 'index'])->name('index');
 
-    Route::get('/create', [PostController::class, 'create'])->name('create');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('create');
 
     Route::post('/', [PostController::class, 'store'])->name('store');
 
-    Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
+    Route::post('/posts/{id}', [CommentController::class, 'store'])->name('comment');
 
-    Route::get('/{id}', [PostController::class, 'show'])->name('show');
+    Route::get('/posts/show/{id}', [PostController::class, 'show'])->name('show');
 
-    Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
+    Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('destroy');
+
+    Route::get('/posts/{id}', [ListController::class, 'list'])->name('list');
 });
+
+
+
 
 require __DIR__.'/auth.php';
