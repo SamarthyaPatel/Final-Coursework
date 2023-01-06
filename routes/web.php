@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ListController;
-use App\Http\Controllers\testingEmailController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,6 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 });
 
 
-Route::get('/email/sending', [testingEmailController::class, 'store']);
+Route::get('/email/sending/{id}', [NotificationController::class, 'store'])->name('send-notification');
 
 require __DIR__.'/auth.php';

@@ -10,8 +10,11 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Headers;
+use App\Models\Comment;
+use App\Models\Post;
+use Auth;
 
-class testingEmail extends Mailable
+class Notification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,9 +23,10 @@ class testingEmail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Post $post, String $comment)
     {
-        //
+        $this->post = $post;
+        $this->comment = $comment;
     }
 
     /**
@@ -33,10 +37,7 @@ class testingEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            replyTo: [
-                new Address('samarthya@final.com', 'Samarthya Patel')
-            ],
-            subject: 'Testing Email',
+            subject: 'Someone commented on your post!',
         );
     }
 
@@ -48,7 +49,12 @@ class testingEmail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'emails.testing_email',
+            view: 'emails.notification',
+            with: [
+                'commenter' => Auth::user()->name,
+                'post' => $this->post,
+                'comment' => $this->comment,
+            ],
         );
     }
 

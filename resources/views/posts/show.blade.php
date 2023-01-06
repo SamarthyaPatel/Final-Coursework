@@ -24,7 +24,6 @@ use Auth;
     <h1>Social Platform - {{$user->name}} </h1>
 
     <div style="background-color:lightblue; width:50%; margin: auto; padding: 1em; border-radius: 20px;">
-
         <div>
             <a href=" {{route('index')}} " style="font-size: 4em; padding-left: 0.5em; text-decoration: none; font-family:'Courier New', Courier, monospace; color: white;">🠔</a>
             @if ($user->id == Auth::user()->id)
@@ -99,6 +98,16 @@ use Auth;
             },
             success: function (data) {
                 listComment();
+                $.ajax({
+                    type: 'get',
+                    url: "{{ route('send-notification', ['id' => $post->id]) }}",
+                    data: {
+                        comment: comment
+                    },
+                    success:function(){
+
+                    }
+                })
             }
         });
     });
