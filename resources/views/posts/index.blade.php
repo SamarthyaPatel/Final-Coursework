@@ -1,27 +1,7 @@
 @extends('layouts.basic')
 
 @section('content')
-    {{-- <style>
-        .card {
-            background-color: #a8a8a8;
-            color: black;
-            width: 50%;
-            text-align: center;
-            font-family: Helvetica, Arial, sans-serif;
-            font-weight: bold;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .link {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-    </style> --}}
+
     <div class="container-lg p-5">
     
         @if (session('message'))

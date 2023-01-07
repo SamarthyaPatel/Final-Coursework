@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Platform - @yield('title')</title>
+    <title>Social Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    @vite('resources/css/app.css')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     @livewireStyles
 </head>
 <body>
@@ -14,11 +15,18 @@
 
         <nav class="navbar navbar-light " style="background-color: #e3f2fd; border-radius: 10px;">
             <ul class="nav nav-fill" style="width:100%;">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="#">Profile</a>
-                      <a class="dropdown-item" href="#">Log Out</a>
+                <li class="nav-item">
+                    <div class="dropdown" style="position: relative;">
+                        <a class="nav-link dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
+                        <div class="dropdown-menu" aria-labelledby="book-dropdown" style="position: absolute; width: 38%; margin-left: 150px;">
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a class="dropdown-item" onclick="event.preventDefault();this.closest('form').submit();"> Log Out</a>
+                            </form>
+                            
+                        </div>
+                    </div>
                   </li>
                 <li class="nav-item">
                     <a class="nav-link" href=" {{ route('index')}} ">Home</a>

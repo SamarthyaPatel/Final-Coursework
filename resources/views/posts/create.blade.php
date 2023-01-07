@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="container p-2" style="width: 50%; margin:auto;">
+    <div class="container" style="width: 50%; margin:auto;">
         
         <div class="container p-2 mt-5 shadow-lg p-1 mb-3 bg-white rounded" style=" border-radius: 20px; height: 400px;">
             <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
