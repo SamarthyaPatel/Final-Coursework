@@ -54,6 +54,7 @@ use Auth;
             </div>
             <br>
             <br><br>
+            
             <div class="listComments"></div>
 
         </div>
@@ -72,7 +73,7 @@ use Auth;
 
     function listComment(){
         $.ajax({
-                url:'{{route("list", ["id" => Auth::user()->id])}}',
+                url:'{{route("list", ["id" => $post->id])}}',
                 success:function(res){
                     $('.listComments').html(res);
                 }
@@ -92,7 +93,7 @@ use Auth;
         var comment = $(".comment").val();
         $.ajax({
             type: 'POST',
-            url: "{{ route('comment', ['id' => Auth::user()->id]) }}",
+            url: "{{ route('comment', ['id' => $post->id]) }}",
             data: {
                 comment: comment
             },

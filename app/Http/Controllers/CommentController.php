@@ -36,13 +36,14 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $request->validate([
             'comment'=>'required',
         ]);
         $comment = new Comment();
         $comment->comment = $request->input('comment');
+        $comment->post_id = $id;
         $comment->user_id = Auth::user()->id;
         $comment->save();
 
@@ -92,7 +93,11 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        $post = $comment->post_id;
+        $comment->delete();
+
+        return redirect()->route('show', ['id' => $post])->with('message', 'Comment was deleted successfully.');
     }
 }
 ?>

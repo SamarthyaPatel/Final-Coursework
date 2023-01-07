@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -43,9 +44,17 @@ class PostController extends Controller
         $request->validate([
             'caption'=>'required',
         ]); 
-        // Getting values from the blade template form
+
+        $image = $request->file('image')->getClientOriginalName();
+        $size = $request->file('image')->getSize();
+        $caption = $request->input('caption');
+        // $request->file('image')->storeAs('images/', $image);
+        Storage::putFileAs('public/images', $request->file('image'), $image);
+
         $post = new Post;
-        $post->caption = $request->input('caption');
+        $post->image = $image;
+        $post->size = $size;
+        $post->caption = $caption;
         $post->user_id = Auth::user()->id;
         $post->save();
 
