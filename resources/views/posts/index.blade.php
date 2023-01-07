@@ -1,49 +1,60 @@
 @extends('layouts.basic')
 
-@section('title', 'Post Index')
-
 @section('content')
-
-    <h1 style="text-align: center; color: skyblue; background-color: beige">{{ Auth::user()->name }}</h1>
-
-    {{-- Button for creating new post. --}}
-    <form action=" {{ route('create')}} " method="GET">
-        <button type="submit" style="width: 10%; min-height: 50px; font-size: 24pt;"> New Post </button>
-    </form>
-
-    @if (session('message'))
-        <p style="background-color: chartreuse"> {{ session('message') }} </p>
-    @endif
-
-    <ul>
-        @foreach($posts as $post)
-
-        <div>
-            <a href=" {{ route('show', ['id' => $post->id]) }}" style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: black; text-decoration: none;">
-                
-                <div style="background-color:lightblue; width:50%; margin: auto; padding: 1em; border-radius: 20px;" >
-                    <h4 style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">{{$users[$post->user_id-1]->name}} @ {{$users[$post->user_id-1]->email}}</h2>
+    {{-- <style>
+        .card {
+            background-color: #a8a8a8;
+            color: black;
+            width: 50%;
+            text-align: center;
+            font-family: Helvetica, Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
         
+        .link {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+    </style> --}}
+    <div class="container-lg p-5">
+    
+        @if (session('message'))
+            <p> {{ session('message') }} </p>
+        @endif
+    
+        <ul>
+            @foreach($posts as $post)
+    
+            <div class="container">
+                <div class="card shadow p-1 mb-3 bg-white rounded" style="width: 50%; margin:auto;">
+                    <div class="card-body">
+                        @inject('time', 'App\Http\Controllers\TimeElapsed')
+                        <div class="card-title" style="font-weight: bold;">{{$users[$post->user_id-1]->name}} | {{$users[$post->user_id-1]->email}}</div>
+                        <p class="card-text">{{$post->caption}}</p>
+                        <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
+                    </div>
                     @if($post->image != NULL)
-                        <div style="text-align: center;">
-                            <img src=" {{ asset('storage/images/'. $post->image) }} " alt="Image posted by {{$users[$post->user_id-1]->name}}" width="500" height="500">
+                        <div class="card-img-bottom">
+                            <img src=" {{ asset('storage/images/'. $post->image) }} " alt="Image posted by {{$users[$post->user_id-1]->name}}" class="img-fluid p-3 pt-0">
                         </div>
                     @endif
-                    <h3>{{$post->caption}}</h3>
-                    
-                    @inject('time', 'App\Http\Controllers\TimeElapsed')
-                    <p style="text-align: right; font-size: 1.5em; padding-right: 5%;">
-                        {{ $time::time_elapsed_string($post->created_at) }}
-                    </p>
-                    </div>
+                    <a href=" {{ route('show', ['id' => $post->id]) }}" ><span class="stretched-link"></span></a>
+                </div>
+                
                 <div style="height: 1cm;">
                 </div>
 
-            </a>
-        </div>
-        
-
-        @endforeach
-    </ul>
+            </div>
+            
+    
+            @endforeach
+        </ul>
+    </div>
 
 @endsection
