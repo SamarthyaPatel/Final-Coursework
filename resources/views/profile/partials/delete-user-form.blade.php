@@ -1,10 +1,10 @@
 @extends('layouts.basic')
 
-@section('delete')
+@section('content')
     
 <div class="container p-2 mt-5 shadow-lg p-1 mb-3 bg-white rounded">
     <section class="space-y-6">
-        <header>
+        <header class="p-4">
             <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Delete Account') }}
             </h2>
@@ -14,7 +14,8 @@
             </p>
         </header>
     
-        <x-danger-button
+        <div class="ps-4">
+            <x-danger-button class="btn btn-danger"
             x-data=""
             x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
         >{{ __('Delete Account') }}</x-danger-button>
@@ -57,6 +58,7 @@
                 </div>
             </form>
         </x-modal>
+        </div>
     </section>
     
 </div>

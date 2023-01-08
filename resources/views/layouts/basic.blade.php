@@ -22,6 +22,8 @@
                         <a class="nav-link dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <div class="dropdown-menu" aria-labelledby="book-dropdown" style="position: absolute; width: 38%; margin-left: 150px;">
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">Profile</a>
+                            <a href="{{ route('profile.update') }}" class="dropdown-item">Update Password</a>
+                            <a href="{{ route('profile.destroy') }}" class="dropdown-item">Manage Account</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a class="dropdown-item" onclick="event.preventDefault();this.closest('form').submit();"> Log Out</a>
@@ -40,11 +42,9 @@
         </nav>
 
         <div>
-        @yield('profile')
 
-        @yield('update')
+        @yield('content')
 
-        @yield('delete')
         </div>
     </div>
 

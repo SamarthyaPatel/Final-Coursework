@@ -1,6 +1,6 @@
 @extends('layouts.basic')
 
-@section('profile')
+@section('content')
     
 <section>
     
@@ -55,7 +55,7 @@
                 @endif
             </div>
     
-            <div class="flex items-center gap-4 mt-4 ps-4">
+            <div class="flex items-center gap-4 my-4 ps-4">
                 <x-primary-button class="btn btn-success">{{ __('Save') }}</x-primary-button>
     
                 @if (session('status') === 'profile-updated')
