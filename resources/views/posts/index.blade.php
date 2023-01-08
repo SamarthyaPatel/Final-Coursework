@@ -22,9 +22,9 @@
                             <p class="card-text">{{$post->caption}}</p>
                             <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
                             @if($post->image != NULL)
-                            <div class="card-img-bottom">
-                                <img src=" {{ asset('storage/images/'. $post->image) }} " alt="Image posted by {{$users[$post->user_id-1]->name}}" class="img-fluid pt-0">
-                            </div>
+                                <div class="card-img-bottom">
+                                    <img src=" {{ asset('storage/images/'. $post->image) }} " alt="Image posted by {{$users[$post->user_id-1]->name}}" class="img-fluid pt-0">
+                                </div>
                             @endif
                             <a href=" {{ route('show', ['id' => $post->id]) }}" ><span class="stretched-link"></span></a>
                         </div>

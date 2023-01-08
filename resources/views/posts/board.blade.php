@@ -24,9 +24,9 @@ $tags = Tag::get();
                             <div class="card-body">
                                 
                                 <div class="card-title" style="font-weight: bold;">
-                                    <a href="{{route('getProfile', ['id' => $tag->id])}}"> {{$tag->name}} </a>
+                                    <a href="{{route('tag', ['id' => $tag->id])}}"> {{$tag->name}} </a>
                                 </div>
-                                <p class="card-text"> {{count($tags)}} </p>
+                                <p class="card-text"> {{$tag->posts->count()}} </p>
                             </div>
                         </div>
                     @endforeach

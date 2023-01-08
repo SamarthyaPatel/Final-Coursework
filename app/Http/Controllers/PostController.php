@@ -142,4 +142,9 @@ class PostController extends Controller
         return view('posts.board');
     }
 
+    public function getTag($id) {
+
+        return view('posts.tag', ['id' => $id]);
+    }
+
 }

@@ -2,36 +2,31 @@
 
 <?php
 
-namespace App\Http\Controllers;
-use App\Models\User;
+use App\Models\Tag;
 use App\Models\Post;
-use App\Models\Profile;
 
-$user = User::findOrFail($id);
-$profile = Profile::where('user_id', $user->id)->first();
-$posts = Post::where('user_id', $user->id)->get()->reverse();
+$post = new Post();
+
+$tag = Tag::find($id);
+
+$posts = $tag->posts;
+
 ?>
 
 @section('content')
-    
-    <div class="container">
-        <div class="shadow p-1 my-5 bg-white rounded" style="width: 70%; margin:auto;">
 
-            <nav class="navbar mt-4">
-                <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;"> 🠔 </a>
-            </nav>
+    <div class="container mt-5">
+        <div class="card shadow p-1 mb-3 bg-white rounded" style="width: 50%; margin:auto;">
 
             <div class="mt-4 px-3 w-100" style="text-align: center;">
-                <img src="{{ asset('storage/images/'. $profile->avatar) }}" alt="" class="avatar">
-                <h1 class="mt-3">{{$user->name}}</h1>
-                <h1> @ {{$profile->username}}</h1>
+                <h5>{{$tag->name}} tag</h5>
             </div>
 
-            <div class="card-columns m-4">
+            <div class="card-deck m-4 justify-content-center">
                     
                 @foreach ($posts as $post)
                     
-                    <div class="card mt-3 ms-3 mb-2" style="width: 250px;">
+                    <div class="card mt-3 ms-3 mb-2">
                         @if($post->image)
                             <img class="card-img-top" src="{{ asset('storage/images/'. $post->image) }}">
                         @endif
@@ -50,22 +45,8 @@ $posts = Post::where('user_id', $user->id)->get()->reverse();
                 @endforeach
 
             </div>
-            
 
         </div>
-        
     </div>
-
-    <style>
-        .card {
-            display: inline-block;
-        }
-
-        .avatar {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-        }
-    </style>
 
 @endsection

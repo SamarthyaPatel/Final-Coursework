@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Comment;
 use Auth;
 
+
+$tags = $post->tags;
+
 ?>
 
 @extends('layouts.basic')
@@ -41,6 +44,10 @@ use Auth;
                     </div>
                     <p class="card-text">{{$post->caption}}</p>
                     <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
+                    @foreach ($tags as $tag)
+                    <a href="{{route('tag', ['id' => $tag->id])}}">#  {{$tag->name}} </a>
+                    &nbsp;
+                    @endforeach
                 </div>
                 @if($post->image != NULL)
                     <div class="card-img-bottom">
