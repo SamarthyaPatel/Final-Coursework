@@ -44,14 +44,16 @@ class PostController extends Controller
             'caption'=>'required',
         ]); 
 
-        $image = $request->file('image')->getClientOriginalName();
-        $size = $request->file('image')->getSize();
-        $caption = $request->input('caption');
-        Storage::putFileAs('public/images', $request->file('image'), $image);
-
         $post = new Post;
-        $post->image = $image;
-        $post->size = $size;
+
+        if($request->file('image') != NULL) {
+            $image = $request->file('image')->getClientOriginalName();
+            $size = $request->file('image')->getSize();
+            Storage::putFileAs('public/images', $request->file('image'), $image);
+            $post->image = $image;
+            $post->size = $size;
+        }
+        $caption = $request->input('caption');
         $post->caption = $caption;
         $post->user_id = Auth::user()->id;
         $post->save();

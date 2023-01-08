@@ -6,6 +6,8 @@ use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Profile;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -65,8 +67,32 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function displayProfile($id) {
+    public function displayProfile($id) 
+    {
 
         return view('user_profile', ['id' => $id]);
+    }
+
+    public function createProfile() {
+        if(Profile::find(Auth::user()->id)) {
+            return redirect()->route('getProfile', ['id' => Auth::user()->id]);
+        } else {
+            return view('create_profile');
+        }
+
+    }
+
+    public function storeProfile(Request $request) 
+    {
+        $profile = new Profile;
+        $profile->user_id = Auth::user()->id;
+        $profile->username = $request->input('username');
+        if($request->file('avatar') != NULL) {
+            $image = $request->file('avatar')->getClientOriginalName();
+            Storage::putFileAs('public/images', $request->file('avatar'), $image);
+            $profile->avatar = $image;
+        }
+        $profile->gender = $request->input('gender');
+        $profile->save();
     }
 }

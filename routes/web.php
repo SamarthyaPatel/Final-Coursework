@@ -37,6 +37,10 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/create', [PostController::class, 'create'])->name('create');
 
+    Route::get('/user-profile/create', [ProfileController::class, 'createProfile'])->name('createProfile');
+
+    Route::post('/user-profile', [ProfileController::class, 'storeProfile'])->name('storeProfile');
+
     Route::get('/user-profile/{id}', [ProfileController::class, 'displayProfile'])->name('getProfile');
 
     Route::post('/', [PostController::class, 'store'])->name('store');
@@ -46,9 +50,6 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
 
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
-
-    Route::get('/{id}', [ListController::class, 'list'])->name('list');
-
     
 });
 

@@ -36,8 +36,8 @@ use Auth;
                 
                 <div class="card-body">
                     @inject('time', 'App\Http\Controllers\TimeElapsed')
-                    <div class="card-title">
-                        <div class="card-title" style="font-weight: bold;">{{$user->name}} | {{$user->email}}</div>
+                    <div class="card-title" style="font-weight: bold;">
+                        <a href="{{route('getProfile', ['id' => $post->id])}}"> {{$user->name}} </a>
                     </div>
                     <p class="card-text">{{$post->caption}}</p>
                     <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
