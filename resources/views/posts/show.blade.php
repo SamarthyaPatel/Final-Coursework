@@ -23,7 +23,10 @@ $tags = $post->tags;
         <div class="card shadow p-1 mb-3 bg-white rounded" style="width: 50%; margin:auto;">
             <div class="card-body">
                 <nav class="navbar">
-                    <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;">🠔 Go Back</a>
+                    <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;"> 🠔 </a>
+
+                    <a href=" {{route('edit', ['id' => $post->id])}} " class="nav-link ps-3" style="font-size: 2em;"> ✎ </a>
+
                     <div>
                         @if ($user->id == Auth::user()->id)
                             <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
@@ -40,7 +43,7 @@ $tags = $post->tags;
                 <div class="card-body">
                     @inject('time', 'App\Http\Controllers\TimeElapsed')
                     <div class="card-title" style="font-weight: bold;">
-                        <a href="{{route('getProfile', ['id' => $post->id])}}"> {{$user->name}} </a>
+                        <a href="{{route('getProfile', ['id' => $user->id])}}"> {{$user->name}} </a>
                     </div>
                     <p class="card-text">{{$post->caption}}</p>
                     <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>

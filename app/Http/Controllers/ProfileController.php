@@ -98,4 +98,22 @@ class ProfileController extends Controller
 
         return redirect()->route('index');
     }
+
+    public function editProfile($id) {
+        return view('profile.editProfile', ['id' => $id]);
+    }
+
+    public function updateProfile(Request $request, $id) {
+        $profile = Profile::find($id);
+        $profile->username = $request->input('username');
+        if($request->file('avatar') != NULL) {
+            $image = $request->file('avatar')->getClientOriginalName();
+            Storage::putFileAs('public/images', $request->file('avatar'), $image);
+            $profile->avatar = $image;
+        }
+        $profile->gender = $request->input('gender');
+        $profile->save();
+
+        return view('user_profile', ['id' => $id]);
+    }
 }

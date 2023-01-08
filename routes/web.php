@@ -43,6 +43,10 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     
     Route::post('/user-profile', [ProfileController::class, 'storeProfile'])->name('storeProfile');
 
+    Route::get('/user-profile/edit/{id}', [ProfileController::class, 'editProfile'])->name('editProfile');
+
+    Route::post('/user-profile/{id}', [ProfileController::class, 'updateProfile'])->name('profile_update');
+
     Route::post('/', [PostController::class, 'store'])->name('store');
 
     Route::get('/board', [PostController::class, 'getBoard'])->name('board');
@@ -52,6 +56,10 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
     Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
 
     Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
+
+    Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
+
+    Route::post('/update/{id}', [PostController::class, 'update'])->name('post_update');
 
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
     

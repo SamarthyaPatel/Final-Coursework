@@ -24,7 +24,7 @@ $tags = Tag::get();
                             <div class="card-body">
                                 
                                 <div class="card-title" style="font-weight: bold;">
-                                    <a href="{{route('tag', ['id' => $tag->id])}}"> {{$tag->name}} </a>
+                                    <a href="{{route('tag', ['id' => $tag->id])}}" class="stretched-link"> {{$tag->name}} </a>
                                 </div>
                                 <p class="card-text"> {{$tag->posts->count()}} </p>
                             </div>

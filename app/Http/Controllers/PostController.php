@@ -105,7 +105,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('posts.edit', ['id' => $id]);
     }
 
     /**
@@ -117,7 +117,39 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        if($request->file('image') != NULL) {
+            $image = $request->file('image')->getClientOriginalName();
+            Storage::putFileAs('public/images', $request->file('image'), $image);
+            $post->image = $image;
+            $post->size = $size;
+        }
+        $caption = $request->input('caption');
+        $post->caption = $caption;
+        $post->user_id = Auth::user()->id;
+        $post->save();
+        if($request->input('tag') != NULL) {
+            $tags = $request->input('tag');
+            
+            foreach($tags as $tag) {
+                if($tag != NULL) {
+                    if(Tag::where('name', $tag)->first()) {
+                        $tag_id = Tag::where('name', $tag)->get();
+                        $post->tags()->attach($tag_id);
+                    } else {
+                        $item = new Tag;
+                        $item->name = $tag;
+                        $item->save();
+                        $post->tags()->attach($item);
+                    }
+                } 
+            }
+        }
+
+        session()->flash('message', 'New Post Uploaded.');
+
+        return redirect('/posts');
     }
 
     /**

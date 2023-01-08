@@ -6,6 +6,9 @@ use DateTime;
 
 class timeElapsed extends Controller
 {
+
+    //Function to get time in a formatted way.
+    
     public static function time_elapsed_string($datetime, $full = false) {
         $now = new DateTime();
         $ago = new DateTime($datetime);
