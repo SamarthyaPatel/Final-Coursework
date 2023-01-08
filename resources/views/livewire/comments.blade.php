@@ -28,7 +28,9 @@ use App\Models\User;
                                     <i class="fas fa-times cursor-pointer" wire:click="deleteComment({{$comment->id}})" style="position: absolute; right: 20px;"></i>
                                 </div>
                             @endif
-                            <div class="card-title" style="font-weight: bold;"> {{User::findOrFail($comment->user_id)->name}} </div>
+                            <div class="card-title" style="font-weight: bold;">
+                                <a href="{{route('getProfile', ['id' => $comment->user_id])}}"> {{User::findOrFail($comment->user_id)->name}} </a>
+                            </div>
                             <p class="card-text"> {{$comment->comment}} </p>
                             <p class="card-text" style="text-align: right;"><small> {{TimeElapsed::time_elapsed_string($comment->created_at)}} </small></p>
                         </div>
