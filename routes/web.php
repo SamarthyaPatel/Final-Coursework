@@ -45,8 +45,6 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::delete('/{id}', [PostController::class, 'destroy'])->name('destroy');
 
-    Route::delete('/{id}', [CommentController::class, 'destroy'])->name('comment-delete');
-
     Route::get('/{id}', [ListController::class, 'list'])->name('list');
 
     

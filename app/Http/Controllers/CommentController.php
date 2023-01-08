@@ -85,19 +85,5 @@ class CommentController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $comment = Comment::findOrFail($id);
-        $post = $comment->post_id;
-        $comment->delete();
-
-        return redirect()->route('show', ['id' => $post])->with('message', 'Comment was deleted successfully.');
-    }
 }
 ?>

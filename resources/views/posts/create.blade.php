@@ -10,12 +10,12 @@
             <form method="POST" action="{{ route('store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
-                    <label for="" class="pt-3 pl-3 form-label"> Caption </label>
+                    <label for="" class="pt-3 ps-3 form-label"> Caption </label>
                     <p class="px-2"><input class="form-control" type="text" name="caption"></p>
                 </div>
         
                 <div class="mb-3">
-                    <label for="" class="pt-3 pl-3 form-label"> Picture </label>
+                    <label for="" class="pt-3 ps-3 form-label"> Picture </label>
                     <p class="px-2 mb-5"><input class="form-control-file" style="width: 100%; padding-top: 0.2em; padding-bottom:0.2em; padding-left:0.2em;" type="file" name="image" accept="image/png, image/jpeg"></p>
                 </div>
                 

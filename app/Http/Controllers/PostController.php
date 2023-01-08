@@ -48,7 +48,6 @@ class PostController extends Controller
         $image = $request->file('image')->getClientOriginalName();
         $size = $request->file('image')->getSize();
         $caption = $request->input('caption');
-        // $request->file('image')->storeAs('images/', $image);
         Storage::putFileAs('public/images', $request->file('image'), $image);
 
         $post = new Post;
@@ -74,7 +73,9 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $user = User::findOrFail($post->user_id);
         $post_time = $post->created_at;
-        return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time]);
+        $comments = Comment::get()->where('post_id', $id);
+        $comments = $comments->reverse();
+        return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time], compact('comments'));
     }
 
     /**
