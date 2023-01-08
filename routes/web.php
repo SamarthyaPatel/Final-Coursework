@@ -45,6 +45,8 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::post('/', [PostController::class, 'store'])->name('store');
 
+    Route::get('/board', [PostController::class, 'getBoard'])->name('board');
+
     Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
 
     Route::get('/show/{id}', [PostController::class, 'show'])->name('show');

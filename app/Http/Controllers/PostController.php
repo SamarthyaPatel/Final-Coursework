@@ -5,6 +5,7 @@ use Auth;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -57,6 +58,23 @@ class PostController extends Controller
         $post->caption = $caption;
         $post->user_id = Auth::user()->id;
         $post->save();
+        if($request->input('tag') != NULL) {
+            $tags = $request->input('tag');
+            
+            foreach($tags as $tag) {
+                if($tag != NULL) {
+                    if(Tag::where('name', $tag)->first()) {
+                        $tag_id = Tag::where('name', $tag)->get();
+                        $post->tags()->attach($tag_id);
+                    } else {
+                        $item = new Tag;
+                        $item->name = $tag;
+                        $item->save();
+                        $post->tags()->attach($item);
+                    }
+                } 
+            }
+        }
 
         session()->flash('message', 'New Post Uploaded.');
 
@@ -115,13 +133,13 @@ class PostController extends Controller
         $current_user = Auth::user()->id;
         $post_user = $post->user_id;
 
-        if($post_user == $current_user) {
-            $post->delete();
-        } else {
-            return redirect()->route('index')->with('message', 'You can not delete ' . User::findOrFail($post_user)->name . '\'s post. ');
-        }
+        $post->delete();
 
         return redirect()->route('index')->with('message', 'Post was deleted successfully.');
+    }
+
+    public function getBoard(){
+        return view('posts.board');
     }
 
 }

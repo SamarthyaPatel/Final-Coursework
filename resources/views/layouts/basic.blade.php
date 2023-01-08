@@ -35,6 +35,9 @@
                     <a class="nav-link" href=" {{ route('index')}} ">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{route('board')}}" >Tags</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href=" {{ route('create')}} ">New Post</a>
                 </li>
             </ul>
