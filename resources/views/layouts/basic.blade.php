@@ -40,7 +40,11 @@
         </nav>
 
         <div>
-        @yield('content')
+        @yield('profile')
+
+        @yield('update')
+
+        @yield('delete')
         </div>
     </div>
 

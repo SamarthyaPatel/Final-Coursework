@@ -48,30 +48,9 @@ use Auth;
                     </div>
                 @endif
 
-                {{-- <div>
-                    <div class="mt-3 px-3">
-                        <h5 class="ps-1"> Comments </h5>
-                        <div class="row m-0">
-                            <div class="col p-0" style="text-align: center;">
-                                <p><input type="text" id="comment" class="comment form-control" placeholder="Add comment"></p>
-                            </div>
-                            <div class="col-1 p-0" style="text-align: center;">
-                                <a href="javascript:void(0)" class="submit form-control" style="text-decoration: none; background-color: white; color: black;"> ➤ </a>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-
-                <div style="background-color: lightyellow">
-                    <h1>Livewire</h1>
+                <div>
                     @livewire('comments', ['online_user' => Auth::user()->id, 'post_id' => $post->id])
                 </div>
-
-                {{-- <div class="container" style="background-color: pink;">
-                
-                    <div class="listComments"></div>
-        
-                </div> --}}
 
             </div>
     
@@ -79,63 +58,5 @@ use Auth;
         </div>
         @livewireScripts
     </div>
-
-    
-    {{-- <script type="text/javascript"> 
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        function listComment(){
-            $.ajax({
-                    url:'{{route("list", ["id" => $post->id])}}',
-                    success:function(res){
-                        $('.listComments').html(res);
-                    }
-                });
-        }
-
-        listComment();
-
-        $(function(){
-            setInterval(() => {
-                listComment();            
-            }, 1000);
-        });
-
-        $(".submit").click(function (e) {
-
-            e.preventDefault();
-            var comment = $(".comment").val();
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('comment', ['id' => $post->id]) }}",
-                data: {
-                    comment: comment
-                },
-                success: function (data) {
-                    var getValue= document.getElementById("comment");
-                    if (getValue.value !="") {
-                        getValue.value = "";
-                    }
-                    listComment();
-                    $.ajax({
-                        type: 'get',
-                        url: "{{ route('send-notification', ['id' => $post->id]) }}",
-                        data: {
-                            comment: comment
-                        },
-                        success:function(){
-
-                        }
-                    })
-                }
-            });
-        });
-
-    </script> --}}
 
 @endsection

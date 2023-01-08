@@ -1,3 +1,9 @@
+@extends('layouts.basic')
+
+@section('update')
+    
+<div class="container p-2 mt-5 shadow-lg p-1 mb-3 bg-white rounded">
+    
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
@@ -46,3 +52,8 @@
         </div>
     </form>
 </section>
+
+</div>
+
+
+@endsection

@@ -13,27 +13,32 @@ use App\Models\User;
                 <div class="col p-0" style="text-align: center;">
                     <p><input type="text" id="comment" class="comment form-control" placeholder="Add comment" wire:model.lazy="newComment"></p>
                 </div>
+                <div class="col-1"></div>
                 <div class="col-1 p-0" style="text-align: center;">
-                    <button wire:click="addComment" class="submit form-control" style="background-color: white; color: black;"> ➤ </button>
+                    <button id="post-comment" wire:click="addComment" class="submit form-control"> ➤ </button>
                 </div>
+            </div>
+
+            <div>
+                @foreach ($commentList as $comment)
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            @if ($online_user == $comment->user_id)
+                                <div style="text-align:right;">
+                                    <i class="fas fa-times cursor-pointer" wire:click="deleteComment({{$comment->id}})" style="position: absolute; right: 20px;"></i>
+                                </div>
+                            @endif
+                            <div class="card-title" style="font-weight: bold;"> {{User::findOrFail($comment->user_id)->name}} </div>
+                            <p class="card-text"> {{$comment->comment}} </p>
+                            <p class="card-text" style="text-align: right;"><small> {{TimeElapsed::time_elapsed_string($comment->created_at)}} </small></p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
     
-    @foreach ($commentList as $comment)
-        <div class="card mb-3">
-            <div class="card-body">
-                @if ($online_user == $comment->user_id)
-                    <div style="text-align:right;">
-                        <i class="fas fa-times cursor-pointer" wire:click="deleteComment({{$comment->id}})" style="position: absolute; right: 20px;"></i>
-                    </div>
-                @endif
-                <div class="card-title" style="font-weight: bold;"> {{User::findOrFail($comment->user_id)->name}} </div>
-                <p class="card-text"> {{$comment->comment}} </p>
-                <p class="card-text" style="text-align: right;"><small> {{TimeElapsed::time_elapsed_string($comment->created_at)}} </small></p>
-            </div>
-        </div>
-    @endforeach
+    
 
     <script type="text/javascript"> 
 
@@ -74,6 +79,15 @@ use App\Models\User;
     </script>
 
     <style>
+
+        #post-comment {
+            background-color: white; color: black;
+        }
+
+        #post-comment:hover {
+            background-color: green; color: white;
+        }
+
         i:hover {
             color: red;
         }
