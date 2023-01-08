@@ -34,7 +34,7 @@
             </div>
             
             <div class="mb-3 w-100" style="padding-left: 30%;">
-                <button type="submit" class="btn btn-primary w-50 " style="background-color: rgb(0, 0, 255);">Post</button>
+                <button type="submit" class="btn btn-primary w-50 " style="background-color: rgb(0, 0, 255);">Save</button>
             </div>
         </form>
     

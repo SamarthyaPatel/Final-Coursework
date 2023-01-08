@@ -69,16 +69,15 @@ class ProfileController extends Controller
 
     public function displayProfile($id) 
     {
-
+        if(!Profile::find($id)) {
+            return view('create_profile');
+        }
         return view('user_profile', ['id' => $id]);
     }
 
     public function createProfile() {
-        if(Profile::find(Auth::user()->id)) {
-            return redirect()->route('getProfile', ['id' => Auth::user()->id]);
-        } else {
-            return view('create_profile');
-        }
+        
+        return view('create_profile');
 
     }
 
@@ -91,8 +90,12 @@ class ProfileController extends Controller
             $image = $request->file('avatar')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('avatar'), $image);
             $profile->avatar = $image;
+        } else {
+            $profile->avatar = 'avatar.jpg';
         }
         $profile->gender = $request->input('gender');
         $profile->save();
+
+        return redirect()->route('index');
     }
 }

@@ -16,7 +16,7 @@
                     <div class="card-body">
                         @inject('time', 'App\Http\Controllers\TimeElapsed')
                         <div class="card-title" style="font-weight: bold;">
-                            <a href="{{route('getProfile', ['id' => $post->id])}}"> {{$users[$post->user_id-1]->name}} </a>
+                            <a href="{{route('getProfile', ['id' => $users[$post->user_id-1]->id])}}"> {{$users[$post->user_id-1]->name}} </a>
                         </div>
                         <div style="position: relative;">
                             <p class="card-text">{{$post->caption}}</p>

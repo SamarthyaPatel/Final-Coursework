@@ -21,7 +21,7 @@
                     <div class="dropdown" style="position: relative;">
                         <a class="nav-link dropdown-toggle" type="button" id="book-dropdown" data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
                         <div class="dropdown-menu" aria-labelledby="book-dropdown" style="position: absolute; width: 38%; margin-left: 150px;">
-                            <a class="dropdown-item" href="{{ route('createProfile') }}">Profile</a>
+                            <a class="dropdown-item" href="{{ route('getProfile', ['id' => Auth::user()->id]) }}">Profile</a>
                             <a href="{{ route('profile.edit') }}" class="dropdown-item">Manage Account</a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
