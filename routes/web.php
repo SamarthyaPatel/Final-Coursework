@@ -37,6 +37,8 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::get('/create', [PostController::class, 'create'])->name('create');
 
+    Route::get('/user-profile/{id}', [ProfileController::class, 'displayProfile'])->name('getProfile');
+
     Route::post('/', [PostController::class, 'store'])->name('store');
 
     Route::post('/{id}', [CommentController::class, 'store'])->name('comment');

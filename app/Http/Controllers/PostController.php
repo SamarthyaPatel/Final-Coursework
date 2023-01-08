@@ -17,8 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::get();
-        $posts = $posts->reverse();
+        $posts = Post::latest()->paginate(2);
         $users = User::get();
         return view('posts.index', ['posts' => $posts, 'users' => $users]);
     }
@@ -75,7 +74,7 @@ class PostController extends Controller
         $post_time = $post->created_at;
         $comments = Comment::get()->where('post_id', $id);
         $comments = $comments->reverse();
-        return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time], compact('comments'));
+        return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time]);
     }
 
     /**

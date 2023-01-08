@@ -1,7 +1,5 @@
 @extends('layouts.basic')
 
-@section('title', 'New Post')
-
 @section('content')
 
     <div class="container" style="width: 50%; margin:auto;">

@@ -64,4 +64,9 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function displayProfile($id) {
+
+        return view('user_profile', ['id' => $id]);
+    }
 }
