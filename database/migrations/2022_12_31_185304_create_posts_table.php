@@ -20,9 +20,13 @@ return new class extends Migration
             $table->string('caption');
             $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+            $table->bigInteger('board_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('restrict')->onUpdate('cascade');
+
+            $table->foreign('board_id')->references('id')->on('boards')
+                ->onDelete('restrict')->onUpdate('cascade');    
         });
     }
 
