@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 class NotificationController extends Controller
 {
     /**
-     * Ship the given order.
+     * Send Notification Email to the post owner.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

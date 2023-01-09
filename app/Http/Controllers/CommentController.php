@@ -22,6 +22,7 @@ class CommentController extends Controller
         $request->validate([
             'comment'=>'required',
         ]);
+        
         $comment = new Comment();
         $comment->comment = $request->input('comment');
         $comment->post_id = $id;

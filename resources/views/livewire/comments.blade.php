@@ -31,7 +31,7 @@ use App\Models\User;
                             <div class="card-title" style="font-weight: bold;">
                                 <a href="{{route('getProfile', ['id' => $comment->user_id])}}"> {{User::findOrFail($comment->user_id)->name}} </a>
                             </div>
-                            <p class="card-text"> {{$comment->comment}} </p>
+                            <p class="card-text"> ❑ {{$comment->comment}} </p>
                             <p class="card-text" style="text-align: right;"><small> {{TimeElapsed::time_elapsed_string($comment->created_at)}} </small></p>
                         </div>
                     </div>

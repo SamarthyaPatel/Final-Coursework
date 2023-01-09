@@ -67,25 +67,51 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
+    /**
+     * Display the user's profile.
+     *
+     * @param  \Illuminate\Http\Request
+     * @return \Illuminate\View\View
+     */
     public function displayProfile($id) 
     {
         if(!Profile::find($id)) {
             return view('create_profile');
         }
+
         return view('user_profile', ['id' => $id]);
     }
 
+    /**
+     * Create the user's profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
     public function createProfile() {
         
         return view('create_profile');
 
     }
 
+    /**
+     * Store the user's profile.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View
+     */
     public function storeProfile(Request $request) 
     {
+
+        $request->validate([
+            'username'=>'required|max:20',
+        ]); 
+
         $profile = new Profile;
         $profile->user_id = Auth::user()->id;
         $profile->username = $request->input('username');
+
+        //If user uploaded avatar image, save it, else use default image.
         if($request->file('avatar') != NULL) {
             $image = $request->file('avatar')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('avatar'), $image);
@@ -93,19 +119,26 @@ class ProfileController extends Controller
         } else {
             $profile->avatar = 'avatar.jpg';
         }
+
         $profile->gender = $request->input('gender');
         $profile->save();
 
         return redirect()->route('index');
     }
 
-    public function editProfile($id) {
+    //Redirects to editing profile view
+    public function editProfile($id) 
+    {
         return view('profile.editProfile', ['id' => $id]);
     }
 
-    public function updateProfile(Request $request, $id) {
+    // Updates the profile with new details
+    public function updateProfile(Request $request, $id) 
+    {
         $profile = Profile::find($id);
         $profile->username = $request->input('username');
+
+        //Check whether user uploaded new avatar image, if not, use the old image
         if($request->file('avatar') != NULL) {
             $image = $request->file('avatar')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('avatar'), $image);

@@ -42,25 +42,29 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'caption'=>'required',
+            'caption'=>'required|max:200',
         ]); 
 
         $post = new Post;
 
+        //If there is an image, store image, else go ahead.
         if($request->file('image') != NULL) {
             $image = $request->file('image')->getClientOriginalName();
-            $size = $request->file('image')->getSize();
             Storage::putFileAs('public/images', $request->file('image'), $image);
             $post->image = $image;
             $post->size = $size;
         }
+
         $caption = $request->input('caption');
         $post->caption = $caption;
         $post->user_id = Auth::user()->id;
         $post->save();
+
+        //If tags are added, then link them with the post, else go ahead.
         if($request->input('tag') != NULL) {
             $tags = $request->input('tag');
             
+            //For each tag, check whether they exist, if yes then link, else make new tag and then link.
             foreach($tags as $tag) {
                 if($tag != NULL) {
                     if(Tag::where('name', $tag)->first()) {
@@ -92,13 +96,11 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $user = User::findOrFail($post->user_id);
         $post_time = $post->created_at;
-        $comments = Comment::get()->where('post_id', $id);
-        $comments = $comments->reverse();
         return view('posts.show', ['post' => $post, 'user' => $user, 'post_time' => $post_time]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified post.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -119,19 +121,28 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
+        //Check whether new image is uploaded, if yes, save, else go ahead. 
         if($request->file('image') != NULL) {
             $image = $request->file('image')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('image'), $image);
             $post->image = $image;
             $post->size = $size;
         }
+
+        $request->validate([
+            'caption'=>'required|max:200',
+        ]);
+
         $caption = $request->input('caption');
         $post->caption = $caption;
         $post->user_id = Auth::user()->id;
         $post->save();
+
+        //If tags are added, then link them with the post, else go ahead.
         if($request->input('tag') != NULL) {
             $tags = $request->input('tag');
             
+            //For each tag, check whether they exist, if yes then link, else make new tag and then link.
             foreach($tags as $tag) {
                 if($tag != NULL) {
                     if(Tag::where('name', $tag)->first()) {
@@ -147,7 +158,7 @@ class PostController extends Controller
             }
         }
 
-        session()->flash('message', 'New Post Uploaded.');
+        session()->flash('message', 'Your post is updated.');
 
         return redirect('/posts');
     }
@@ -161,19 +172,29 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
-
         $current_user = Auth::user()->id;
         $post_user = $post->user_id;
-
         $post->delete();
 
         return redirect()->route('index')->with('message', 'Post was deleted successfully.');
     }
 
+    /**
+     * Displays the tags board.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function getBoard(){
         return view('posts.board');
     }
 
+    /**
+     * Display the specified tag.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function getTag($id) {
 
         return view('posts.tag', ['id' => $id]);

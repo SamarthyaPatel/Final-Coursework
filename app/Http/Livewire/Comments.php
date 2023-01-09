@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Comment;
-use Carbon\Carbon;
 
 class Comments extends Component
 {
@@ -20,6 +19,7 @@ class Comments extends Component
 
     public $newComment;
 
+    //Mounts data with the variables
     public function mount($post_id, $online_user) {
 
         $this->online_user_name = User::findOrFail($online_user)->name;
@@ -29,6 +29,7 @@ class Comments extends Component
         $this->commentList = Comment::latest()->get()->where('post_id', $this->post);
     }
 
+    //Takes the input and updates the commentList (Comment storing is done using AJAX in show.blade.php)
     public function addComment()
     {
         $this->commentList = Comment::latest()->get()->where('post_id', $this->post);
@@ -36,6 +37,7 @@ class Comments extends Component
         $this->newComment = "";
     }
 
+    //Deletes comment from the database
     public function deleteComment($id)
     {
         $comment = Comment::findOrFail($id);

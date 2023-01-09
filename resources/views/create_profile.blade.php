@@ -15,17 +15,23 @@
             <div class="mb-3">
                 <label for="" class="pt-3 ps-3 form-label"> Gender </label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="exampleRadios1" value="male" checked>
-                    <label class="form-check-label" for="exampleRadios1">
-                      Male
+                    <input class="form-check-input" type="radio" name="gender" id="" value="male" checked>
+                    <label class="form-check-label" for="">
+                        Male
                     </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="exampleRadios2" value="female">
-                    <label class="form-check-label" for="exampleRadios2">
-                      Female
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="" value="female">
+                    <label class="form-check-label" for="">
+                        Female
                     </label>
-                  </div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="" value="other">
+                    <label class="form-check-label" for="">
+                        Other
+                    </label>
+                </div>
             </div>
     
             <div class="mb-3">
