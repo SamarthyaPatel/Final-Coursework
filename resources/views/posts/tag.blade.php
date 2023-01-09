@@ -11,6 +11,8 @@ $tag = Tag::find($id);
 
 $posts = $tag->posts;
 
+$posts = $posts->reverse();
+
 ?>
 
 @section('content')
@@ -26,7 +28,7 @@ $posts = $tag->posts;
                     
                 @foreach ($posts as $post)
                     
-                    <div class="card mt-3 ms-3 mb-2">
+                    <div class="card mt-3 ms-3 mb-2" style="background-color: lightyellow">
                         @if($post->image)
                             <img class="card-img-top" src="{{ asset('storage/images/'. $post->image) }}">
                         @endif

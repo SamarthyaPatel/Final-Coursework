@@ -1,3 +1,7 @@
+<?php
+use App\Models\User;
+?>
+
 @extends('layouts.basic')
 
 @section('content')
@@ -16,14 +20,14 @@
                     <div class="card-body">
                         @inject('time', 'App\Http\Controllers\TimeElapsed')
                         <div class="card-title" style="font-weight: bold;">
-                            <a href="{{route('getProfile', ['id' => $users[$post->user_id-1]->id])}}"> {{$users[$post->user_id-1]->name}} </a>
+                            <a href="{{route('getProfile', ['id' => User::find($post->user_id)->id])}}"> {{User::find($post->user_id)->name}} </a>
                         </div>
                         <div style="position: relative;">
                             <p class="card-text">{{$post->caption}}</p>
                             <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
                             @if($post->image != NULL)
                                 <div class="card-img-bottom">
-                                    <img src=" {{ asset('storage/images/'. $post->image) }} " alt="Image posted by {{$users[$post->user_id-1]->name}}" class="img-fluid pt-0">
+                                    <img src=" {{ asset('storage/images/'. $post->image) }} " class="img-fluid pt-0">
                                 </div>
                             @endif
                             <a href=" {{ route('show', ['id' => $post->id]) }}" ><span class="stretched-link"></span></a>

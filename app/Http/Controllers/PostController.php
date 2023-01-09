@@ -52,7 +52,6 @@ class PostController extends Controller
             $image = $request->file('image')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('image'), $image);
             $post->image = $image;
-            $post->size = $size;
         }
 
         $caption = $request->input('caption');

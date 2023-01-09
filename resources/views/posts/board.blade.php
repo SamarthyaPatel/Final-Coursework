@@ -10,7 +10,7 @@ $tags = Tag::get();
 
 @section('content')
     
-    <div class="container">
+    <div class="container mt-5">
         <div class="card shadow p-1 mb-3 bg-white rounded" style="width: 50%; margin:auto;">
 
             <div class="card-body">
@@ -26,7 +26,7 @@ $tags = Tag::get();
                                 <div class="card-title" style="font-weight: bold;">
                                     <a href="{{route('tag', ['id' => $tag->id])}}" class="stretched-link"> {{$tag->name}} </a>
                                 </div>
-                                <p class="card-text"> {{$tag->posts->count()}} </p>
+                                <p class="card-text"> Posts: {{$tag->posts->count()}} </p>
                             </div>
                         </div>
                     @endforeach

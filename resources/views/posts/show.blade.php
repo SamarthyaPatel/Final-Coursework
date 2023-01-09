@@ -25,7 +25,9 @@ $tags = $post->tags;
                 <nav class="navbar">
                     <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;"> 🠔 </a>
 
-                    <a href=" {{route('edit', ['id' => $post->id])}} " class="nav-link ps-3" style="font-size: 2em;"> ✎ </a>
+                    @if ($user->id == Auth::user()->id)
+                        <a href=" {{route('edit', ['id' => $post->id])}} " class="nav-link ps-3" style="font-size: 2em;"> ✎ </a>
+                    @endif
 
                     <div>
                         @if ($user->id == Auth::user()->id)
@@ -48,7 +50,7 @@ $tags = $post->tags;
                     <p class="card-text">{{$post->caption}}</p>
                     <p class="card-text" style="text-align: right;"><small>{{ $time::time_elapsed_string($post->created_at) }}</small></p>
                     @foreach ($tags as $tag)
-                    <a href="{{route('tag', ['id' => $tag->id])}}">#  {{$tag->name}} </a>
+                    <a href="{{route('tag', ['id' => $tag->id])}}" style="font-weight: bold; text-decoration: none;">#  {{$tag->name}} </a>
                     &nbsp;
                     @endforeach
                 </div>
