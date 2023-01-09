@@ -6,8 +6,8 @@
     <div>
         <p style="font-size: 2em;"> Caption : {{$post->caption}} </p>
         @if($post->image != NULL)
-            <div class="card-img-bottom">
-                <img src=" {{ asset('storage/images/'. $post->image) }} " class="img-fluid pt-0">
+            <div class="card-img-bottom w-50">
+                <img src=" {{ asset('storage/images/'. $post->image) }} " class="img-fluid pt-0" style="width: 30%">
             </div>
         @endif
     </div>

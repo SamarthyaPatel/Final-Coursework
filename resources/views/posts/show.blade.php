@@ -25,12 +25,12 @@ $tags = $post->tags;
                 <nav class="navbar">
                     <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;"> 🠔 </a>
 
-                    @if ($user->id == Auth::user()->id)
+                    @if ($user->id == Auth::user()->id || Auth::user()->role == 1)
                         <a href=" {{route('edit', ['id' => $post->id])}} " class="nav-link ps-3" style="font-size: 2em;"> ✎ </a>
                     @endif
 
                     <div>
-                        @if ($user->id == Auth::user()->id)
+                        @if ($user->id == Auth::user()->id || Auth::user()->role == 1)
                             <form action="{{ route('destroy', ['id' => $post->id]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

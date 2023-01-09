@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Profile;
+use Auth;
 
 $user = User::findOrFail($id);
 $profile = Profile::where('user_id', $user->id)->first();
@@ -19,7 +20,9 @@ $posts = Post::where('user_id', $user->id)->get()->reverse();
 
             <nav class="navbar mt-4">
                 <a href=" {{route('index')}} " class="nav-link ps-3" style="font-size: 2em;"> 🠔 </a>
+                @if (Auth::user()->id == $user->id || Auth::user()->role == 1)
                 <a href=" {{route('editProfile', ['id' => $user->id])}} " class="nav-link ps-3 me-4" style="font-size: 2em;"> ✎ </a>
+                @endif
             </nav>
 
             <div class="mt-4 px-3 w-100" style="text-align: center;">
