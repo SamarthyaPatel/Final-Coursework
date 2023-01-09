@@ -55,6 +55,8 @@ Route::prefix('posts')->middleware(['auth', 'verified'])->group(function() {
 
     Route::post('/{id}', [CommentController::class, 'store'])->name('comment');
 
+    Route::post('/{id}', [CommentController::class, 'edit'])->name('update-comment');
+
     Route::get('/show/{id}', [PostController::class, 'show'])->name('show');
 
     Route::get('/edit/{id}', [PostController::class, 'edit'])->name('edit');
