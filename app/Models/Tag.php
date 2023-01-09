@@ -11,6 +11,7 @@ class Tag extends Model
 
     protected $fillable = ['name'];
 
+    //Many-to-Many Relation
     public function posts()
     {
         return $this->belongsToMany(Post::class);
