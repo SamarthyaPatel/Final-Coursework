@@ -34,14 +34,18 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        
+        $comment = Comment::find($id);
+        $comment->comment = $request->input('comment');
+        $comment->save();
+
+        session()->flash('message', 'Comment updated.');
     }
 
 }
