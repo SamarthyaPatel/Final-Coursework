@@ -24,7 +24,7 @@ use App\Models\Post;
                 @foreach ($commentList as $comment)
                     <div class="card mb-3">
                         <div class="card-body">
-                            @if ($online_user == $comment->user_id || User::find(Post::find($comment->post_id)->user_id)->id == $online_user || $online_user->role == 1)
+                            @if ($online_user == $comment->user_id || User::find(Post::find($comment->post_id)->user_id)->id == $online_user || User::find($online_user)->role == 1)
                                 <div style="text-align:right;">
                                     <i class="fas fa-times cursor-pointer" wire:click="deleteComment({{$comment->id}})" style="position: absolute; right: 20px;"></i>
                                 </div>

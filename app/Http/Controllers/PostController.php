@@ -125,7 +125,6 @@ class PostController extends Controller
             $image = $request->file('image')->getClientOriginalName();
             Storage::putFileAs('public/images', $request->file('image'), $image);
             $post->image = $image;
-            $post->size = $size;
         }
 
         $request->validate([
@@ -134,7 +133,6 @@ class PostController extends Controller
 
         $caption = $request->input('caption');
         $post->caption = $caption;
-        $post->user_id = Auth::user()->id;
         $post->save();
 
         //If tags are added, then link them with the post, else go ahead.
